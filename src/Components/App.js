@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import Home from "./Home";
+import Cave from "./Cave";
 import Login from "./Login";
+import Info from "./Info";
+import Vonnegut from "./Vonnegut";
 import { useSelector, useDispatch } from "react-redux";
 import { loginWithToken } from "../store";
 import { Link, Routes, Route } from "react-router-dom";
@@ -15,12 +17,30 @@ const App = () => {
   return (
     <div>
       <h1>Caves of Mercury</h1>
-      {auth.id ? <Home /> : <Login />}
+      {!auth.id && (
+        <div>
+          <nav>
+            <Link to="/">Enter The Cave</Link>
+            <Link to="/info">About The Cave</Link>
+          </nav>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/info" element={<Info />} />
+            <Route path="/vonnegut" element={<Vonnegut />} />
+          </Routes>
+        </div>
+      )}
       {!!auth.id && (
         <div>
           <nav>
-            <Link to="/">Home</Link>
+            <Link to="/">Cave</Link>
+            <Link to="/info">About The Cave</Link>
           </nav>
+          <Routes>
+            <Route path="/" element={<Cave />} />
+            <Route path="/info" element={<Info />} />
+            <Route path="/vonnegut" element={<Vonnegut />} />
+          </Routes>
         </div>
       )}
     </div>
