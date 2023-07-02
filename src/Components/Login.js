@@ -1,39 +1,30 @@
-import React, { useState } from 'react';
-import { attemptLogin } from '../store';
-import { useDispatch } from 'react-redux';
+import React, { useState } from "react";
+import { attemptLogin } from "../store";
+import { useDispatch } from "react-redux";
 
-const Login = ()=> {
+const Login = () => {
   const dispatch = useDispatch();
-  const [credentials, setCredentials] = useState({
-    username: '',
-    password: ''
-  });
+  const [username, setUsername] = useState("");
 
-  const onChange = ev => {
-    setCredentials({...credentials, [ ev.target.name ]: ev.target.value });
+  const onChange = (ev) => {
+    setUsername(ev.target.value);
   };
 
-  const login = (ev)=> {
+  const login = (ev) => {
     ev.preventDefault();
-    dispatch(attemptLogin(credentials));
+    dispatch(attemptLogin(username));
   };
   return (
     <div>
-      <h2>Login</h2>
-      <form onSubmit={ login }>
+      <h2>Enter the Cave</h2>
+      <form onSubmit={login}>
         <input
-          placeholder='username'
-          value = { credentials.username }
-          name = 'username'
-          onChange = { onChange }
-          />
-        <input
-          placeholder='password'
-          name = 'password'
-          value={ credentials.password }
-          onChange = { onChange }
+          placeholder="my name"
+          value={username}
+          name="username"
+          onChange={onChange}
         />
-        <button>Login</button>
+        <button>Enter</button>
       </form>
     </div>
   );
