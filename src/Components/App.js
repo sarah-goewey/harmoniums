@@ -5,11 +5,13 @@ import Info from "./Info";
 import Vonnegut from "./Vonnegut";
 import { useSelector, useDispatch } from "react-redux";
 import { loginWithToken } from "../store";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, useLocation } from "react-router-dom";
 
 const App = () => {
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const view = location.pathname;
   useEffect(() => {
     dispatch(loginWithToken());
   }, []);
@@ -20,8 +22,12 @@ const App = () => {
       {!auth.id && (
         <div>
           <nav>
-            <Link to="/">Enter The Cave</Link>
-            <Link to="/info">About The Cave</Link>
+            <Link to="/" className={view === "/" ? "selected" : ""}>
+              Enter The Cave
+            </Link>
+            <Link to="/info" className={view === "/info" ? "selected" : ""}>
+              About The Cave
+            </Link>
           </nav>
           <Routes>
             <Route path="/" element={<Login />} />
@@ -33,8 +39,12 @@ const App = () => {
       {!!auth.id && (
         <div>
           <nav>
-            <Link to="/">Cave</Link>
-            <Link to="/info">About The Cave</Link>
+            <Link to="/" className={view === "/" ? "selected" : ""}>
+              Cave
+            </Link>
+            <Link to="/info" className={view === "/info" ? "selected" : ""}>
+              About The Cave
+            </Link>
           </nav>
           <Routes>
             <Route path="/" element={<Cave />} />

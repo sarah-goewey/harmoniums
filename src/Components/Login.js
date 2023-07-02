@@ -16,7 +16,6 @@ const Login = () => {
   };
   return (
     <div>
-      <h2>Enter the Cave</h2>
       <form onSubmit={login}>
         <input
           placeholder="my name"

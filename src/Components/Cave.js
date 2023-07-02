@@ -8,12 +8,10 @@ const Cave = () => {
   return (
     <div>
       <div>
-        <h2>
-          Welcome {auth.username}!!
-          <button onClick={() => dispatch(logout())}>Logout</button>
-        </h2>
+        <h2>Welcome to the cave, {auth.username}!</h2>
         <h2>Harmoniums Present:</h2>
         <h2>Messages Received:</h2>
+        <button onClick={() => dispatch(logout())}>Leave Cave</button>
       </div>
     </div>
   );
