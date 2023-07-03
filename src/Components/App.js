@@ -6,6 +6,7 @@ import Vonnegut from "./Vonnegut";
 import { useSelector, useDispatch } from "react-redux";
 import { loginWithToken } from "../store";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
+import bootstrap from "bootstrap";
 
 const App = () => {
   const { auth } = useSelector((state) => state);
@@ -17,11 +18,11 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <h1>Caves of Mercury</h1>
       {!auth.id && (
         <div>
-          <nav>
+          <nav className="navbar">
             <Link to="/" className={view === "/" ? "selected" : ""}>
               Enter The Cave
             </Link>
