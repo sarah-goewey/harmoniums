@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Cave from "./Cave";
 import Login from "./Login";
 import Info from "./Info";
@@ -10,12 +10,42 @@ import bootstrap from "bootstrap";
 
 const App = () => {
   const { auth } = useSelector((state) => state);
+  const prevAuth = useRef(auth);
   const dispatch = useDispatch();
   const location = useLocation();
   const view = location.pathname;
+
   useEffect(() => {
     dispatch(loginWithToken());
   }, []);
+
+  useEffect(() => {
+    if (!prevAuth.current.id && auth.id) {
+      console.log("just logged in");
+      window.socket = new WebSocket(
+        window.location.origin.replace("http", "ws")
+      );
+      window.socket.addEventListener("open", () => {
+        window.socket.send(
+          JSON.stringify({ token: window.localStorage.getItem("token") })
+        );
+      });
+      window.socket.addEventListener("message", (ev) => {
+        const message = JSON.parse(ev.data);
+        if (message.type) {
+          dispatch(message);
+        }
+      });
+    }
+    if (prevAuth.current.id && !auth.id) {
+      console.log("just logged out");
+      window.socket.close();
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    prevAuth.current = auth;
+  });
 
   return (
     <div className="container">
