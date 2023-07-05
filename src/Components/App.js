@@ -37,7 +37,7 @@ const App = () => {
         }
       });
       dispatch(fetchOnlineUsers());
-      dispatch(fetchMessages());
+      //dispatch(fetchMessages());
     }
     if (prevAuth.current.id && !auth.id) {
       console.log("just logged out");
