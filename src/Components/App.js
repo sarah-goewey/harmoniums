@@ -4,7 +4,7 @@ import Login from "./Login";
 import Info from "./Info";
 import Vonnegut from "./Vonnegut";
 import { useSelector, useDispatch } from "react-redux";
-import { loginWithToken } from "../store";
+import { loginWithToken, fetchOnlineUsers } from "../store";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
 import bootstrap from "bootstrap";
 
@@ -36,6 +36,7 @@ const App = () => {
           dispatch(message);
         }
       });
+      dispatch(fetchOnlineUsers());
     }
     if (prevAuth.current.id && !auth.id) {
       console.log("just logged out");
