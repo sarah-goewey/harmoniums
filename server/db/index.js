@@ -1,5 +1,9 @@
 const conn = require("./conn");
 const User = require("./User");
+const Message = require("./Message");
+
+Message.belongsTo(User, { as: "from" });
+Message.belongsTo(User, { as: "to" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
@@ -9,6 +13,8 @@ const syncAndSeed = async () => {
     User.create({ username: "larry" }),
     User.create({ username: "ethyl" }),
   ]);
+
+  await Message.create({ toId: moe.id, fromId: lucy.id, txt: "Here I am" });
 
   return {
     users: {
@@ -23,4 +29,5 @@ const syncAndSeed = async () => {
 module.exports = {
   syncAndSeed,
   User,
+  Message,
 };
