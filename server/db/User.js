@@ -20,6 +20,58 @@ const User = conn.define("user", {
   },
 });
 
+User.prototype.messagesForUser = function () {
+  return conn.models.message.findAll({
+    order: [["createdAt"]],
+    where: {
+      [conn.Sequelize.Op.or]: [
+        {
+          toId: this.id,
+        },
+        {
+          fromId: this.id,
+        },
+      ],
+    },
+    include: [
+      {
+        model: User,
+        as: "from",
+        attributes: ["username", "id"],
+      },
+      {
+        model: User,
+        as: "to",
+        attributes: ["username", "id"],
+      },
+    ],
+  });
+};
+
+User.prototype.sendMessage = async function (message) {
+  message = await conn.models.message.create({ ...message, fromId: this.id });
+  message = await conn.models.message.findByPk(message.id, {
+    include: [
+      {
+        model: User,
+        as: "from",
+        attributes: ["id", "username"],
+      },
+      {
+        model: User,
+        as: "to",
+        attributes: ["id", "username"],
+      },
+    ],
+  });
+  if (socketMap[message.toId]) {
+    socketMap[message.toId].socket.send(
+      JSON.stringify({ type: "CREATE_MESSAGE", message })
+    );
+  }
+  return message;
+};
+
 User.findByToken = async function (token) {
   try {
     const { id } = jwt.verify(token, process.env.JWT);
@@ -27,7 +79,7 @@ User.findByToken = async function (token) {
     if (user) {
       return user;
     }
-    throw "user not found";
+    throw "could not find user";
   } catch (ex) {
     const error = new Error("bad credentials");
     error.status = 401;

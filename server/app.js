@@ -13,6 +13,7 @@ app.get("/", (req, res) =>
 );
 
 app.use("/api/auth", require("./api/auth"));
+app.use("/api/messages", require("./api/messages"));
 
 app.get("/api/onlineUsers", (req, res, next) => {
   try {

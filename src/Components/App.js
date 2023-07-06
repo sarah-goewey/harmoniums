@@ -22,6 +22,7 @@ const App = () => {
   useEffect(() => {
     if (!prevAuth.current.id && auth.id) {
       console.log("just logged in");
+      console.log("auth.id", auth.id);
       window.socket = new WebSocket(
         window.location.origin.replace("http", "ws")
       );
@@ -37,7 +38,7 @@ const App = () => {
         }
       });
       dispatch(fetchOnlineUsers());
-      //dispatch(fetchMessages());
+      dispatch(fetchMessages());
     }
     if (prevAuth.current.id && !auth.id) {
       console.log("just logged out");
