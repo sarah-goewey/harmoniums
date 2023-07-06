@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const socketMap = require("./socketMap");
+const { User } = require("./db");
 
 app.use(express.json({ limit: "50mb" }));
 
@@ -14,6 +15,14 @@ app.get("/", (req, res) =>
 
 app.use("/api/auth", require("./api/auth"));
 app.use("/api/messages", require("./api/messages"));
+
+app.get("/api/users", async (req, res, next) => {
+  try {
+    res.send(await User.findAll());
+  } catch (ex) {
+    next(ex);
+  }
+});
 
 app.get("/api/onlineUsers", (req, res, next) => {
   try {

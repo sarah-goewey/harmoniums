@@ -22,6 +22,11 @@ const Message = conn.define("message", {
     type: UUID,
     allowNull: false,
   },
+  replied: {
+    type: BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
 });
 
 module.exports = Message;

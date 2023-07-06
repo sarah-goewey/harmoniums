@@ -7,7 +7,14 @@ const messages = (state = [], action) => {
   if (action.type === "CREATE_MESSAGE") {
     return [...state, action.message];
   }
-
+  if (action.type === "UPDATE_MESSAGE") {
+    return state.map((m) => {
+      if (m.id === action.message.id) {
+        return action.message;
+      }
+      return m;
+    });
+  }
   return state;
 };
 
@@ -32,6 +39,13 @@ export const createMessage = (message) => {
       },
     });
     dispatch({ type: "CREATE_MESSAGE", message: response.data });
+  };
+};
+
+export const updateMessage = (message) => {
+  return async (dispatch) => {
+    const response = await axios.put(`api/messages/${message.id}`, message);
+    dispatch({ type: "UPDATE_MESSAGE", message: response.data });
   };
 };
 

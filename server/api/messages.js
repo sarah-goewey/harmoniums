@@ -21,3 +21,12 @@ app.post("/", isLoggedIn, async (req, res, next) => {
     next(ex);
   }
 });
+
+app.put("/:id", async (req, res, next) => {
+  try {
+    const message = await Message.findByPk(req.params.id);
+    res.send(await message.update(req.body));
+  } catch (ex) {
+    next(ex);
+  }
+});
