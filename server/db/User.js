@@ -17,7 +17,6 @@ const User = conn.define("user", {
     validate: {
       notEmpty: true,
     },
-    unique: true,
   },
 });
 
@@ -93,6 +92,17 @@ User.prototype.generateToken = function () {
 };
 
 User.authenticate = async function ({ username }) {
+  const user = await User.create({ username });
+  if (user) {
+    return jwt.sign({ id: user.id }, JWT);
+  }
+  const error = new Error("bad credentials");
+  error.status = 401;
+  throw error;
+};
+
+//With this version, new user only created if doesn't exist yet
+/*User.authenticate = async function ({ username }) {
   let user = await this.findOne({
     where: {
       username,
@@ -107,6 +117,6 @@ User.authenticate = async function ({ username }) {
   const error = new Error("bad credentials");
   error.status = 401;
   throw error;
-};
+};*/
 
 module.exports = User;

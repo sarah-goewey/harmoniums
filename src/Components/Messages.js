@@ -6,6 +6,8 @@ const Messages = () => {
   const { auth, onlineUsers, messages, users } = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const onlineIDs = onlineUsers.map((user) => user.id);
+
   const sendMessage = (toId) => {
     dispatch(createMessage({ toId, fromId: auth.id, txt: "So glad you are" }));
   };
@@ -22,6 +24,10 @@ const Messages = () => {
     );
   };
 
+  if (!users) {
+    return null;
+  }
+
   return (
     <div>
       <h2>Messages Received: </h2>
@@ -30,21 +36,25 @@ const Messages = () => {
           .filter((message) => message.toId === auth.id)
           .map((message) => {
             const fromUser = users.find((user) => user.id === message.fromId);
-            return (
-              <li key={message.id}>
-                from {fromUser.username}: {message.txt}{" "}
-                {message.txt === "Here I am" && message.replied === false && (
-                  <button
-                    onClick={() => {
-                      sendMessage(fromUser.id);
-                      markAsReplied(message);
-                    }}
-                  >
-                    So glad you are
-                  </button>
-                )}
-              </li>
-            );
+            if (!!fromUser) {
+              return (
+                <li key={message.id}>
+                  from {fromUser.username}: {message.txt}{" "}
+                  {message.txt === "Here I am" &&
+                    message.replied === false &&
+                    onlineIDs.includes(fromUser.id) && (
+                      <button
+                        onClick={() => {
+                          sendMessage(fromUser.id);
+                          markAsReplied(message);
+                        }}
+                      >
+                        So glad you are
+                      </button>
+                    )}
+                </li>
+              );
+            }
           })}
       </ul>
     </div>

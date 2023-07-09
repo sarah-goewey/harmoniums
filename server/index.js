@@ -30,6 +30,7 @@ const init = async () => {
           Object.values(socketMap).forEach((value) => {
             if (value.user.id !== user.id) {
               value.socket.send(JSON.stringify({ type: "LOGIN", user }));
+              value.socket.send(JSON.stringify({ type: "ADD_USER", user }));
             }
           });
         }

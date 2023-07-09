@@ -2,12 +2,12 @@ const conn = require("./conn");
 const User = require("./User");
 const Message = require("./Message");
 
-Message.belongsTo(User, { as: "from" });
-Message.belongsTo(User, { as: "to" });
+Message.belongsTo(User, { as: "from", onDelete: "CASCADE" });
+Message.belongsTo(User, { as: "to", onDelete: "CASCADE" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
-  const [moe, lucy, larry, ethyl] = await Promise.all([
+  /*const [moe, lucy, larry, ethyl] = await Promise.all([
     User.create({ username: "moe" }),
     User.create({ username: "lucy" }),
     User.create({ username: "larry" }),
@@ -23,7 +23,7 @@ const syncAndSeed = async () => {
       larry,
       ethyl,
     },
-  };
+  };*/
 };
 
 module.exports = {

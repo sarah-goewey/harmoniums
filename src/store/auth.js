@@ -1,4 +1,6 @@
 import axios from "axios";
+import { removeUser } from "./users";
+
 const auth = (state = {}, action) => {
   if (action.type === "SET_AUTH") {
     return action.auth;

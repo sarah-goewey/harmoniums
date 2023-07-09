@@ -15,14 +15,7 @@ app.get("/", (req, res) =>
 
 app.use("/api/auth", require("./api/auth"));
 app.use("/api/messages", require("./api/messages"));
-
-app.get("/api/users", async (req, res, next) => {
-  try {
-    res.send(await User.findAll());
-  } catch (ex) {
-    next(ex);
-  }
-});
+app.use("/api/users", require("./api/users"));
 
 app.get("/api/onlineUsers", (req, res, next) => {
   try {
