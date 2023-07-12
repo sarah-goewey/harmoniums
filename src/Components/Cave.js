@@ -1,12 +1,17 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { logout, removeUser } from "../store";
+import { logout, removeUser, removeMyMessages } from "../store";
 import OnlineUsers from "./OnlineUsers";
 import Messages from "./Messages";
 
 const Cave = () => {
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
+
+  const clearLog = () => {
+    dispatch(removeMyMessages(auth));
+  };
+
   return (
     <div>
       <div>
@@ -21,6 +26,7 @@ const Cave = () => {
         >
           Leave Cave
         </button>
+        <button onClick={clearLog}>Clear Log</button>
       </div>
     </div>
   );

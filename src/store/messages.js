@@ -15,6 +15,9 @@ const messages = (state = [], action) => {
       return m;
     });
   }
+  if (action.type === "CLEAR_MESSAGES") {
+    return [];
+  }
   return state;
 };
 
@@ -46,6 +49,18 @@ export const updateMessage = (message) => {
   return async (dispatch) => {
     const response = await axios.put(`api/messages/${message.id}`, message);
     dispatch({ type: "UPDATE_MESSAGE", message: response.data });
+  };
+};
+
+export const removeMyMessages = (auth) => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem("token");
+    await axios.delete(`api/messages/`, {
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch({ type: "CLEAR_MESSAGES" });
   };
 };
 

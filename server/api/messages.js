@@ -30,3 +30,13 @@ app.put("/:id", async (req, res, next) => {
     next(ex);
   }
 });
+
+app.delete("/", isLoggedIn, async (req, res, next) => {
+  try {
+    const messages = await req.user.messagesForUser();
+    await messages.forEach((message) => message.destroy());
+    res.sendStatus(204);
+  } catch (ex) {
+    next(ex);
+  }
+});
