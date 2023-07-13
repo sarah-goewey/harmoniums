@@ -58,41 +58,57 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1>Caves of Mercury</h1>
-      {!auth.id && (
-        <div>
-          <nav className="navbar">
-            <Link to="/" className={view === "/" ? "selected" : ""}>
-              Enter The Cave
-            </Link>
-            <Link to="/info" className={view === "/info" ? "selected" : ""}>
-              About The Cave
-            </Link>
-          </nav>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/info" element={<Info />} />
-            <Route path="/vonnegut" element={<Vonnegut />} />
-          </Routes>
-        </div>
-      )}
-      {!!auth.id && (
-        <div>
-          <nav>
-            <Link to="/" className={view === "/" ? "selected" : ""}>
-              Cave
-            </Link>
-            <Link to="/info" className={view === "/info" ? "selected" : ""}>
-              About The Cave
-            </Link>
-          </nav>
-          <Routes>
-            <Route path="/" element={<Cave />} />
-            <Route path="/info" element={<Info />} />
-            <Route path="/vonnegut" element={<Vonnegut />} />
-          </Routes>
-        </div>
-      )}
+      <div className="inner">
+        <h1 className="display-1 text-center">Caves of Mercury</h1>
+        {!auth.id && (
+          <div>
+            <nav className="navbar">
+              <Link
+                to="/"
+                className={view === "/" ? "nav-link active" : "nav-link"}
+                aria-current={view === "/" ? "page" : ""}
+              >
+                Enter The Cave
+              </Link>
+              <Link
+                to="/info"
+                className={view === "/info" ? "nav-link active" : "nav-link"}
+                aria-current={view === "/info" ? "page" : ""}
+              >
+                About The Cave
+              </Link>
+            </nav>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/info" element={<Info />} />
+              <Route path="/vonnegut" element={<Vonnegut />} />
+            </Routes>
+          </div>
+        )}
+        {!!auth.id && (
+          <div>
+            <nav>
+              <Link
+                to="/"
+                className={view === "/" ? "nav-link active" : "nav-link"}
+              >
+                Cave
+              </Link>
+              <Link
+                to="/info"
+                className={view === "/info" ? "nav-link active" : "nav-link"}
+              >
+                About The Cave
+              </Link>
+            </nav>
+            <Routes>
+              <Route path="/" element={<Cave />} />
+              <Route path="/info" element={<Info />} />
+              <Route path="/vonnegut" element={<Vonnegut />} />
+            </Routes>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

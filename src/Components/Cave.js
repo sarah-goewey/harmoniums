@@ -13,7 +13,7 @@ const Cave = () => {
   };
 
   return (
-    <div>
+    <div className="cave">
       <div>
         <h2>Welcome to the cave, {auth.username}!</h2>
         <OnlineUsers />
