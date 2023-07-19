@@ -87,7 +87,7 @@ const App = () => {
         )}
         {!!auth.id && (
           <div>
-            <nav>
+            <nav className="navbar">
               <Link
                 to="/"
                 className={view === "/" ? "nav-link active" : "nav-link"}

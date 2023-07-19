@@ -1,7 +1,29 @@
 body {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  background-image: url("./cavebackground.png");
+  background-image: url("./cave2.png");
   color: #00fd95;
+}
+
+h1,
+h2,
+h3 {
+  color: #fcfc84;
+}
+
+button {
+  background-color: darkslategrey;
+  color: #fcfc84;
+  border: 1px solid #fcfc84;
+  margin-left: 15px;
+}
+
+.bottombuttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.bottombuttons > * {
+  margin-left: 0;
 }
 
 form {
@@ -35,4 +57,9 @@ nav {
   min-height: 100%;
   max-width: 85%;
   margin: auto;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
 }

@@ -15,18 +15,23 @@ const Cave = () => {
   return (
     <div className="cave">
       <div>
-        <h2>Welcome to the cave, {auth.username}!</h2>
+        <h3>Welcome to the cave, {auth.username}!</h3>
+        <hr />
         <OnlineUsers />
+        <hr />
         <Messages />
-        <button
-          onClick={() => {
-            dispatch(removeUser(auth));
-            dispatch(logout());
-          }}
-        >
-          Leave Cave
-        </button>
-        <button onClick={clearLog}>Clear Log</button>
+        <hr />
+        <div className="bottombuttons">
+          <button
+            onClick={() => {
+              dispatch(removeUser(auth));
+              dispatch(logout());
+            }}
+          >
+            Leave Cave
+          </button>
+          <button onClick={clearLog}>Clear Log</button>
+        </div>
       </div>
     </div>
   );

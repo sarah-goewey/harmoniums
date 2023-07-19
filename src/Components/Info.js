@@ -12,7 +12,7 @@ const Info = () => {
         <h2>About the Cave</h2>
         <p>
           This app is based on{" "}
-          <Link to="/vonnegut">
+          <Link to="/vonnegut" style={{ color: "#fcfc84" }}>
             a passage from The Sirens of Titan by Kurt Vonnegut.
           </Link>
         </p>

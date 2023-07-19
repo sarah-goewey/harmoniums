@@ -8,9 +8,11 @@ const Vonnegut = () => {
   return (
     <div>
       <div>
-        <h2>From The Sirens of Titan by Kurt Vonnegut</h2>
+        <h2>
+          From <i>The Sirens of Titan</i> by Kurt Vonnegut
+        </h2>
         <h3>Chapter Eight</h3>
-        <p>There are creatures in the deep caves of Mercury.</p>
+        <p>"...There are creatures in the deep caves of Mercury.</p>
         <p>
           The song their planet sings is important to them, for the creatures
           are nourished by vibrations. They feed on mechanical energy.
@@ -106,7 +108,7 @@ const Vonnegut = () => {
           themselves in the service of beauty, the creatures are given a lovely
           name by Earthlings.
         </p>
-        <p>They are called harmoniums.</p>
+        <p>They are called harmoniums."</p>
       </div>
     </div>
   );
