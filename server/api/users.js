@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express.Router();
-const { User } = require("../db");
+const { CaveUser } = require("../db");
 const { isLoggedIn } = require("./middleware.js");
 
 module.exports = app;
 
 app.get("/", async (req, res, next) => {
   try {
-    res.send(await User.findAll());
+    res.send(await CaveUser.findAll());
   } catch (ex) {
     next(ex);
   }
@@ -15,7 +15,7 @@ app.get("/", async (req, res, next) => {
 
 app.delete("/:id", async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await CaveUser.findByPk(req.params.id);
     await user.destroy();
     res.sendStatus(204);
   } catch (ex) {

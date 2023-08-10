@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express.Router();
-const { User } = require("../db");
+const { CaveUser } = require("../db");
 const { isLoggedIn } = require("./middleware");
 
 module.exports = app;
 
 app.post("/", async (req, res, next) => {
   try {
-    res.send(await User.authenticate(req.body));
+    res.send(await CaveUser.authenticate(req.body));
   } catch (ex) {
     next(ex);
   }
@@ -15,7 +15,7 @@ app.post("/", async (req, res, next) => {
 
 app.post("/register", async (req, res, next) => {
   try {
-    const user = await User.create(req.body);
+    const user = await CaveUser.create(req.body);
     res.send(user.generateToken());
   } catch (ex) {
     next(ex);

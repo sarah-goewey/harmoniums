@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express.Router();
-const { Message, User } = require("../db");
+const { Message, CaveUser } = require("../db");
 const { isLoggedIn } = require("./middleware.js");
 
 module.exports = app;

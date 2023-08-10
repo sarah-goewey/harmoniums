@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const JWT = process.env.JWT;
 const socketMap = require("../socketMap");
 
-const User = conn.define("user", {
+const CaveUser = conn.define("caveuser", {
   id: {
     type: UUID,
     primaryKey: true,
@@ -20,7 +20,7 @@ const User = conn.define("user", {
   },
 });
 
-User.prototype.messagesForUser = function () {
+CaveUser.prototype.messagesForUser = function () {
   return conn.models.message.findAll({
     order: [["createdAt"]],
     where: {
@@ -35,12 +35,12 @@ User.prototype.messagesForUser = function () {
     },
     include: [
       {
-        model: User,
+        model: CaveUser,
         as: "from",
         attributes: ["username", "id"],
       },
       {
-        model: User,
+        model: CaveUser,
         as: "to",
         attributes: ["username", "id"],
       },
@@ -48,17 +48,17 @@ User.prototype.messagesForUser = function () {
   });
 };
 
-User.prototype.sendMessage = async function (message) {
+CaveUser.prototype.sendMessage = async function (message) {
   message = await conn.models.message.create({ ...message, fromId: this.id });
   message = await conn.models.message.findByPk(message.id, {
     include: [
       {
-        model: User,
+        model: CaveUser,
         as: "from",
         attributes: ["id", "username"],
       },
       {
-        model: User,
+        model: CaveUser,
         as: "to",
         attributes: ["id", "username"],
       },
@@ -72,7 +72,7 @@ User.prototype.sendMessage = async function (message) {
   return message;
 };
 
-User.findByToken = async function (token) {
+CaveUser.findByToken = async function (token) {
   try {
     const { id } = jwt.verify(token, process.env.JWT);
     const user = await this.findByPk(id);
@@ -87,12 +87,12 @@ User.findByToken = async function (token) {
   }
 };
 
-User.prototype.generateToken = function () {
+CaveUser.prototype.generateToken = function () {
   return jwt.sign({ id: this.id }, JWT);
 };
 
-User.authenticate = async function ({ username }) {
-  const user = await User.create({ username });
+CaveUser.authenticate = async function ({ username }) {
+  const user = await CaveUser.create({ username });
   if (user) {
     return jwt.sign({ id: user.id }, JWT);
   }
@@ -101,7 +101,7 @@ User.authenticate = async function ({ username }) {
   throw error;
 };
 
-//With this version, new user only created if doesn't exist yet
+//With this old version, new user only created if doesn't exist yet
 /*User.authenticate = async function ({ username }) {
   let user = await this.findOne({
     where: {
@@ -119,4 +119,4 @@ User.authenticate = async function ({ username }) {
   throw error;
 };*/
 
-module.exports = User;
+module.exports = CaveUser;

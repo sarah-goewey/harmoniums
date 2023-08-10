@@ -1,5 +1,5 @@
 const app = require("./app");
-const { syncAndSeed, User } = require("./db");
+const { syncAndSeed, CaveUser } = require("./db");
 const ws = require("ws");
 const socketMap = require("./socketMap");
 
@@ -24,7 +24,7 @@ const init = async () => {
       socket.on("message", async (data) => {
         const message = JSON.parse(data);
         if (message.token) {
-          const user = await User.findByToken(message.token);
+          const user = await CaveUser.findByToken(message.token);
           socketMap[user.id] = { socket, user };
           socket.userId = user.id;
           Object.values(socketMap).forEach((value) => {

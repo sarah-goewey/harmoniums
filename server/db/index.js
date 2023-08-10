@@ -1,9 +1,9 @@
 const conn = require("./conn");
-const User = require("./User");
+const CaveUser = require("./CaveUser");
 const Message = require("./Message");
 
-Message.belongsTo(User, { as: "from", onDelete: "CASCADE" });
-Message.belongsTo(User, { as: "to", onDelete: "CASCADE" });
+Message.belongsTo(CaveUser, { as: "from", onDelete: "CASCADE" });
+Message.belongsTo(CaveUser, { as: "to", onDelete: "CASCADE" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
@@ -28,6 +28,6 @@ const syncAndSeed = async () => {
 
 module.exports = {
   syncAndSeed,
-  User,
+  CaveUser,
   Message,
 };
